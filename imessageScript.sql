@@ -41,6 +41,9 @@ CREATE VIEW tableWithChatsAndDate AS
 SELECT *, datetime(date + strftime('%s','2001-01-01'), 'unixepoch') as dateSent
 FROM tableWithChats;
 
+CREATE INDEX dateIndex
+ON tableWithChatsAndDate (date);
+
 
 
 PRAGMA table_info(tableWithChatsAndDate);
@@ -180,13 +183,16 @@ AND is_from_me = 1;
 */
 
 -- Counting 'lol' -- 
-/*
+
 SELECT COUNT(*), id
 FROM tableWithChats
 WHERE groupguid = "iMessage;+;chat465960929646925700"
-AND text like '%lol%'
+AND (text like '%lol%'
+OR text like '%LOL%'
+OR text like '%Lol'
+OR text like '%LoL%')
 GROUP BY id;
-*/
+
 
 
 -- Who says what names -- 
@@ -277,10 +283,29 @@ AND text LIKE '%😎%' GROUP BY id;
 */
 
 --------- AVG Message Length --------
+
+/*
 SELECT id, AVG(length(text))
 FROM tableWithChatsAndDate
 WHERE groupguid = "iMessage;+;chat465960929646925700" 
 GROUP by id;
+
+*/
+
+------- first and last message dates ----- 
+
+SELECT id, text, dateSent
+FROM tableWithChatsAndDate as table1
+WHERE groupguid = "iMessage;+;chat465960929646925700" 
+AND NOT EXISTS (SELECT *
+				FROM tableWithChatsAndDate as table2
+				WHERE table2.groupguid = "iMessage;+;chat465960929646925700" 
+				AND table2.date < table1.date);
+
+
+
+
+
 
 
 -- Average time until a response (in minutes). Note that I artificially constrain the dataset -- 
