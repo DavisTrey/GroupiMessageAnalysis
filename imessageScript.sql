@@ -31,6 +31,7 @@ FROM message as m LEFT JOIN handle as h on h.rowid = m.handle_id;
 --"id" for phone number --
 
 
+
 CREATE VIEW tableWithChats AS
 SELECT *, chat.guid as groupguid
 FROM combinedTable2, chat_message_join, chat
@@ -41,8 +42,7 @@ CREATE VIEW tableWithChatsAndDate AS
 SELECT *, datetime(date + strftime('%s','2001-01-01'), 'unixepoch') as dateSent
 FROM tableWithChats;
 
-CREATE INDEX dateIndex
-ON tableWithChatsAndDate (date);
+
 
 
 
@@ -183,7 +183,7 @@ AND is_from_me = 1;
 */
 
 -- Counting 'lol' -- 
-
+/*
 SELECT COUNT(*), id
 FROM tableWithChats
 WHERE groupguid = "iMessage;+;chat465960929646925700"
@@ -193,6 +193,7 @@ OR text like '%Lol'
 OR text like '%LoL%')
 GROUP BY id;
 
+*/
 
 
 -- Who says what names -- 
@@ -292,18 +293,19 @@ GROUP by id;
 
 */
 
-------- first and last message dates ----- 
+------- first and last message dates  (NOT WORKING....stupid imessage date comparisons)----- 
 
+/*
 SELECT id, text, dateSent
 FROM tableWithChatsAndDate as table1
 WHERE groupguid = "iMessage;+;chat465960929646925700" 
 AND NOT EXISTS (SELECT *
 				FROM tableWithChatsAndDate as table2
 				WHERE table2.groupguid = "iMessage;+;chat465960929646925700" 
-				AND table2.date < table1.date);
+				AND julianday(table2.dateSent) < julianday(table1.dateSent));
 
 
-
+*/
 
 
 
