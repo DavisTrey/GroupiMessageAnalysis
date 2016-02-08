@@ -259,6 +259,7 @@ GROUP BY id;
 
 
 -------- TEXT MESSAGE LENGTH COUNTS ------ 
+/*
 .mode csv
 .output amyLength.csv
 SELECT length(text)
@@ -303,6 +304,19 @@ WHERE groupguid = "iMessage;+;chat465960929646925700"
 AND is_from_me = 1;
 
 .output stdout
+*/
+
+
+----- BAD WORDS -----
+
+SELECT id, COUNT(*)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND (UPPER(text) like UPPER('%shit%')
+OR UPPER(text) like UPPER('%fuck%')
+OR UPPER(text) like UPPER('%damn%'))
+GROUP by id;
+
 
 
 --------------- EMOJI COUNTS ---------
