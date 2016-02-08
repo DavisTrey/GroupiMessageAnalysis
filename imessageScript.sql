@@ -258,6 +258,53 @@ GROUP BY id;
 
 
 
+-------- TEXT MESSAGE LENGTH COUNTS ------ 
+.mode csv
+.output amyLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+12107880523';
+
+.output mehulLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+15124844893';
+
+.output brianLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+15129834663';
+
+.output joannaLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+16095981227';
+
+.output natalieLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+18652747424';
+
+.output adilLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND id = '+18653233805';
+
+.output davisLength.csv
+SELECT length(text)
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+AND is_from_me = 1;
+
+.output stdout
+
+
 --------------- EMOJI COUNTS ---------
 
 /*
@@ -303,12 +350,14 @@ ORDER BY date desc;
 
 
 ---- Output all text dates for a histogram --
+/*
 .output histogramData.csv
 SELECT dateSent
 FROM tableWithChatsAndDate
 WHERE groupguid = "iMessage;+;chat465960929646925700"
 ORDER BY date desc;
 .output stdout
+*/
 
 ------- first and last message dates  (NOT WORKING....stupid imessage date comparisons)----- 
 
