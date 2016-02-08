@@ -293,6 +293,23 @@ GROUP by id;
 
 */
 
+------- DATE of first message  (look manually)-------
+/*
+SELECT id, text, date, dateSent
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+ORDER BY date desc;
+*/
+
+
+---- Output all text dates for a histogram --
+.output histogramData.csv
+SELECT dateSent
+FROM tableWithChatsAndDate
+WHERE groupguid = "iMessage;+;chat465960929646925700"
+ORDER BY date desc;
+.output stdout
+
 ------- first and last message dates  (NOT WORKING....stupid imessage date comparisons)----- 
 
 /*
